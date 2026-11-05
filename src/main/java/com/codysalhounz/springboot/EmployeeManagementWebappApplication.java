@@ -1,4 +1,4 @@
-package com.codysullins.springboot;
+package com.codysalhounz.springboot;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
