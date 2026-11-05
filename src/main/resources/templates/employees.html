@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Demo</title>
+    <style>
+        body { font-family: sans-serif; margin: 2rem; max-width: 900px; }
+        form { margin: 1rem 0; }
+        input { margin-right: .5rem; padding: .4rem; }
+        button { padding: .4rem .7rem; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: .6rem; text-align: left; }
+        .logout { float: right; }
+    </style>
+</head>
+<body>
+    <form class="logout" th:action="@{/logout}" method="post">
+        <button type="submit">Log out</button>
+    </form>
+
+    <h1>Employee Demo</h1>
+    <p>This page demonstrates Spring Security, JPA/Hibernate, H2, and Thymeleaf.</p>
+
+    <h2>Add employee</h2>
+    <form th:action="@{/employees}" th:object="${employee}" method="post">
+        <input type="text" th:field="*{name}" placeholder="Name" required>
+        <input type="email" th:field="*{email}" placeholder="Email" required>
+        <input type="text" th:field="*{department}" placeholder="Department" required>
+        <button type="submit">Add</button>
+    </form>
+
+    <h2>Employees</h2>
+    <p th:if="${#lists.isEmpty(employees)}">No employees yet.</p>
+    <table th:unless="${#lists.isEmpty(employees)}">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="employee : ${employees}">
+                <td th:text="${employee.name}">Name</td>
+                <td th:text="${employee.email}">Email</td>
+                <td th:text="${employee.department}">Department</td>
+                <td>
+                    <form th:action="@{/employees/{id}/delete(id=${employee.id})}" method="post">
+                        <button type="submit">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
